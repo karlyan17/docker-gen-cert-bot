@@ -5,6 +5,7 @@ RUN apk update \
     && apk add certbot
 
 ADD docker-gen.cfg /etc/docker-gen/docker-gen.cfg
-ADD templates /etc/docker-gen/
+ADD templates /etc/docker-gen/templates
 
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/ash"]
+#ENTRYPOINT ["docker-gen", "-config", "/etc/docker-gen/docker-gen.cfg"]
