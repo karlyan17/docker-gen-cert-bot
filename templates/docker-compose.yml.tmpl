@@ -1,12 +1,12 @@
 varsion: '3.7'
 services:
-{{ range $hostname, $containers := groupByMulti $ "Env.TLS" "," }}
-    {{ $hostname }}-verification:
+{{ range $tls, $containers := groupBy $ "Env.TLS"}}
+    http-verification-{{ $tls }}:
         image: nginx
         volumes:
             - "well-known:/www/:ro"
         environment:
-            - "VIRTUAL_HOST={{ $hostname }}"
+            - "VIRTUAL_HOST={{ range $container := $containers }}{{ $container.Env.VIRTUAL_HOST }},{{ end }}"
         network:
             - haproxy-net
 {{ end }}

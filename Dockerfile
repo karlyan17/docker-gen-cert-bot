@@ -4,6 +4,8 @@ RUN apk update \
     && apk upgrade \
     && apk add certbot
 
+RUN mkdir /compose
+
 ADD docker-gen.cfg /etc/docker-gen/docker-gen.cfg
 ADD templates /etc/docker-gen/templates
 
