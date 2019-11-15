@@ -1,4 +1,4 @@
-varsion: '3.7'
+version: '3.7'
 services:
 {{ range $tls, $containers := groupBy $ "Env.TLS"}}
     http-verification-{{ $tls }}:
@@ -7,13 +7,14 @@ services:
             - "well-known:/www/:ro"
         environment:
             - "VIRTUAL_HOST={{ range $container := $containers }}{{ $container.Env.VIRTUAL_HOST }},{{ end }}"
-        network:
+        networks:
             - haproxy-net
 {{ end }}
 
 networks:
     haproxy-net:
-        external: haproxy
+        external:
+            name: haproxy
 
 volumes:
     well-known:
