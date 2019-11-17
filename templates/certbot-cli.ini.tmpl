@@ -1,0 +1,22 @@
+{{ range $tls, $containers := groupBy $ "Env.TLS"}}
+    {{ range $container := $containers }}
+domains = {{ $container.Env.VIRTUAL_HOST }}
+    {{ end }}
+{{ end }}
+
+fullchain-path = /crt
+key-path = /crt
+
+noninteractive = True
+text = True
+preferred-challenges = http-01
+
+staging = True
+rsa-key-size = 4096
+
+email = karlyan.kamerer@gmail.com
+agree-tos = True
+
+authenticator = manual
+manual-auth-hook = /certbot-auth.sh
+manual-cleanup-hook = /certbot-clean.sh

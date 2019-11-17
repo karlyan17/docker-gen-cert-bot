@@ -2,7 +2,7 @@ version: '3.7'
 services:
 {{ range $tls, $containers := groupBy $ "Env.TLS"}}
     http-verification-{{ $tls }}:
-        image: docker-gen-cert-nginx
+        image: karlyan/docker-gen-cert-nginx
         volumes:
             - "nginx-srv:/var/www/acme:ro"
         environment:
@@ -18,3 +18,4 @@ networks:
 
 volumes:
     nginx-srv:
+        external: True
