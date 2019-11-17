@@ -2,9 +2,9 @@ version: '3.7'
 services:
 {{ range $tls, $containers := groupBy $ "Env.TLS"}}
     http-verification-{{ $tls }}:
-        image: nginx
+        image: docker-gen-cert-nginx
         volumes:
-            - "well-known:/www/:ro"
+            - "nginx-srv:/var/www/acme:ro"
         environment:
             - "VIRTUAL_HOST={{ range $container := $containers }}{{ $container.Env.VIRTUAL_HOST }},{{ end }}"
         networks:
@@ -17,4 +17,4 @@ networks:
             name: haproxy
 
 volumes:
-    well-known:
+    nginx-srv:
